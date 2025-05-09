@@ -1,0 +1,329 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    background-image: url('/images/bg3.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+header {
+    background: linear-gradient(90deg, #f51146 0%, #ff4b2b 100%);
+    color: #fff;
+    padding: 32px 0 0 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+    position: relative;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Tooltip box styling */
+nav ul li .nav-tooltip {
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: -40px;
+    transform: translateX(-50%);
+    background: #fff;
+    color: #ff416c;
+    padding: 8px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    font-size: 1rem;
+    white-space: nowrap;
+    z-index: 10;
+    font-weight: bold;
+    border: 2px solid #ff416c;
+}
+
+/* Show tooltip on hover */
+nav ul li:hover .nav-tooltip {
+    display: block;
+}
+
+main {
+    padding: 20px;
+    padding-bottom: 70px;
+    min-height: calc(100vh - 180px);
+    overflow-y: auto;
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #cc0000;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #333;
+    color: white;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    z-index: 100;
+}
+
+.donor-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.donor-card h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.donor-card p {
+    margin: 5px 0;
+    color: #666;
+}
+
+#donorList {
+    margin-top: 20px;
+}
+
+/* Home Page Styles */
+.home-container {
+    display: flex;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 2rem;
+    align-items: stretch;
+}
+
+.main-card {
+    background: rgba(255,255,255,0.97);
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 2.5rem 2rem;
+    margin: 2rem 0;
+    max-width: 900px;
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.content-section {
+    padding: 2rem 0 1rem 0;
+}
+
+.image-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-image {
+    width: 90%;
+    max-width: 600px;
+    max-height: 700px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.stats {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.stat-box {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1;
+}
+
+.stat-box h3 {
+    color: #dc3545;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/* Donor Cards */
+.donor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.donor-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.donor-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid #f0f0f0;
+}
+
+/* Buttons */
+.cta-button {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.cta-button:hover {
+    background: #218838;
+}
+
+.contact-btn {
+    width: 100%;
+    padding: 0.8rem;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+/* Search Section */
+.search-section {
+    background: #f8f9fa;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.register-prompt {
+    text-align: center;
+    padding: 2rem;
+    background: #f8f9fa;
+    margin-top: 2rem;
+    border-radius: 10px;
+}
+
+/* Success Page Styles */
+.success-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 200px);
+    padding: 2rem;
+    padding-bottom: 70px;
+}
+
+.success-message {
+    background: white;
+    padding: 3rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 600px;
+}
+
+.success-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1.5rem;
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.cta-button.secondary {
+    background: #6c757d;
+}
+
+.cta-button.secondary:hover {
+    background: #5a6268;
+}
+
+/* Add styles for the form container */
+.form-container {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    padding-bottom: 20px;
+}
+
+.tip-card {
+    background: rgba(255,255,255,0.97);
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 2rem 1.5rem;
+    margin: 2rem 0 2rem 0;
+    max-width: 400px;
+    align-self: flex-start;
+}
+
+.info-card {
+    background: rgba(255,255,255,0.97);
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 2rem 1.5rem;
+    margin: 2.5rem 0 1.5rem 0;
+    max-width: 600px;
+}
