@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Donation Portal</title>
+  <link rel="stylesheet" href="styles/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Welcome to Blood Donation Portal</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="donor-register.html">Register as Donor</a></li>
+        <li><a href="find-donor.html">Find Donor</a></li>
+        <li><a href="request-blood.html">Request Blood</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="home-container">
+    <div class="content-section">
+      <h2>Save Lives Through Blood Donation</h2>
+      <p>Every drop of blood counts! Join our community of life-savers today.</p>
+      <div class="stats">
+        <div class="stat-box">
+          <h3>1000+</h3>
+          <p>Active Donors</p>
+        </div>
+        <div class="stat-box">
+          <h3>500+</h3>
+          <p>Lives Saved</p>
+        </div>
+        <div class="stat-box">
+          <h3>24/7</h3>
+          <p>Support</p>
+        </div>
+      </div>
+      <a href="donor-register.html" class="cta-button">Become a Donor</a>
+    </div>
+    <div class="image-section">
+      <img src="/img1.png" alt="Blood Donation" class="hero-image">
+    </div>
+  </main>
+
+  <div class="info-card">
+    <aside class="donation-tips">
+      <details>
+        <summary>Important Donation Tips</summary>
+        <p>Before donating blood, make sure to:</p>
+        <ul>
+          <li>Get a good night's sleep</li>
+          <li>Eat a healthy meal</li>
+          <li>Drink plenty of water</li>
+        </ul>
+      </details>
+    </aside>
+
+    <div class="donation-schedule">
+      <h3>Next Donation Camp</h3>
+      <time datetime="2024-03-15T09:00">March 15, 2024 at 9:00 AM</time>
+      <mark>Limited slots available!</mark>
+    </div>
+
+    <div class="emergency-contact">
+      <h3>Emergency Blood Request</h3>
+      <p>Visit (no wbr): https://www.verylongurlforemergencybloodrequestexample.com/importantinformation</p>
+      <p>Visit (with wbr): https://www.<wbr>verylongurlfor<wbr>emergencybloodrequest<wbr>example.com/<wbr>importantinformation</p>
+      <p>Available <data value="24">24 hours</data> a day</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2023 Blood Donation Portal</p>
+    <p>Last updated: <time datetime="2024-02-20">February 20, 2024</time></p>
+  </footer>
+
+  <script>
+    function updateLivePreview() {
+      const donor = JSON.parse(localStorage.getItem('currentDonor') || '{}');
+      if (donor.name || donor.bloodGroup || donor.location || donor.contact) {
+        $('#liveDonorPreview').show();
+        $('#previewName').text(donor.name || '');
+        $('#previewBloodGroup').text(donor.bloodGroup || '');
+        $('#previewLocation').text(donor.location || '');
+        $('#previewContact').text(donor.contact || '');
+      } else {
+        $('#liveDonorPreview').hide();
+      }
+    }
+
+    $(function() {
+      updateLivePreview();
+      // Listen for changes in localStorage (cross-tab)
+      window.addEventListener('storage', updateLivePreview);
+      // Also poll every second in case of same-tab changes
+      setInterval(updateLivePreview, 1000);
+      // Apply a radial gradient background to the body
+      $('body').css('background', 'radial-gradient(circle at 50% 30%, #ffdde1 0%, #ee9ca7 100%)');
+    });
+
+    function updateLiveRegistrationCard() {
+      const donor = JSON.parse(localStorage.getItem('currentDonor') || '{}');
+      // Show the card only if at least one field is filled
+      if (donor.name || donor.bloodGroup || donor.location || donor.contact) {
+        $('#liveRegistrationCard').show();
+        $('#liveName').text(donor.name || '');
+        $('#liveBloodGroup').text(donor.bloodGroup || '');
+        $('#liveLocation').text(donor.location || '');
+        $('#liveContact').text(donor.contact || '');
+      } else {
+        $('#liveRegistrationCard').hide();
+      }
+    }
+
+    $(function() {
+      updateLiveRegistrationCard();
+      // Listen for changes in localStorage (cross-tab and same-tab)
+      window.addEventListener('storage', updateLiveRegistrationCard);
+      // Also poll every second for same-tab updates
+      setInterval(updateLiveRegistrationCard, 1000);
+    });
+  </script>
+
+  <div id="liveRegistrationCard" style="display:none; border:2px solid #e74c3c; background:#fff3f3; padding:16px; margin-bottom:24px; border-radius:8px;">
+    <h3 style="color:#e74c3c;">Live Registration In Progress</h3>
+    <p><strong>Name:</strong> <span id="liveName"></span></p>
+    <p><strong>Blood Group:</strong> <span id="liveBloodGroup"></span></p>
+    <p><strong>Location:</strong> <span id="liveLocation"></span></p>
+    <p><strong>Contact:</strong> <span id="liveContact"></span></p>
+  </div>
+</body>
+</html>

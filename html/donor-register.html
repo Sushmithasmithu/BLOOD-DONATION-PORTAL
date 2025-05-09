@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register as Donor</title>
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+<script>
+  // Sync with localStorage - same logic as requestblood.html
+  function updateCurrentDonorFromForm() {
+    const donor = {
+      name: document.getElementById('name').value.trim(),
+      bloodGroup: document.getElementById('bloodGroup').value,
+      location: document.getElementById('location').value.trim(),
+      contact: document.getElementById('contact').value.trim()
+    };
+    localStorage.setItem('currentDonor', JSON.stringify(donor));
+    window.dispatchEvent(new Event('storage')); // trigger update
+  }
+
+  function updateFormFromStorage() {
+    const donor = JSON.parse(localStorage.getItem('currentDonor') || '{}');
+    if (document.getElementById('name').value !== donor.name) {
+      document.getElementById('name').value = donor.name || '';
+    }
+    if (document.getElementById('bloodGroup').value !== donor.bloodGroup) {
+      document.getElementById('bloodGroup').value = donor.bloodGroup || '';
+    }
+    if (document.getElementById('location').value !== donor.location) {
+      document.getElementById('location').value = donor.location || '';
+    }
+    if (document.getElementById('contact').value !== donor.contact) {
+      document.getElementById('contact').value = donor.contact || '';
+    }
+  }
+
+  // On load
+  document.addEventListener('DOMContentLoaded', function () {
+    // Listen for input changes
+    document.querySelectorAll('#donorForm input, #donorForm select').forEach(input => {
+      input.addEventListener('input', updateCurrentDonorFromForm);
+      input.addEventListener('change', updateCurrentDonorFromForm);
+    });
+
+    // Listen for storage updates (cross-tab and same-tab)
+    window.addEventListener('storage', updateFormFromStorage);
+    setInterval(updateFormFromStorage, 1000);
+
+    // Populate form if data exists
+    updateFormFromStorage();
+  });
+</script>
+
+<body>
+  <header>
+    <h1>Register as Donor</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="donor-register.html">Register as Donor</a></li>
+        <li><a href="find-donor.html">Find Donor</a></li>
+        <li><a href="request-blood.html">Request Blood</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <form id="donorForm" novalidate>
+      <label for="name">Name:</label>
+      <input type="text" id="name" required>
+      <span class="error" id="nameError"></span>
+      
+      <label for="bloodGroup">Blood Group:</label>
+      <select id="bloodGroup" required>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+      </select>
+      <span class="error" id="bloodGroupError"></span>
+      
+      <label for="location">Location:</label>
+      <input type="text" id="location" required>
+      <span class="error" id="locationError"></span>
+      
+      <label for="contact">Contact Details (10-digit mobile number):</label>
+      <input type="text" id="contact" maxlength="10" required pattern="\d{10}">
+      <span class="error" id="contactError"></span>
+      
+      <button type="submit">Register</button>
+    </form>
+  </main>
+  <footer>
+    <p>&copy; 2023 Blood Donation Portal</p>
+  </footer>
+  
+  <script>
+    document.getElementById('donorForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Clear previous errors
+        document.getElementById('nameError').textContent = '';
+        document.getElementById('bloodGroupError').textContent = '';
+        document.getElementById('locationError').textContent = '';
+        document.getElementById('contactError').textContent = '';
+
+        let isValid = true;
+
+        // Gather form data
+        const name = document.getElementById('name').value.trim();
+        const bloodGroup = document.getElementById('bloodGroup').value;
+        const location = document.getElementById('location').value.trim();
+        const contact = document.getElementById('contact').value.trim();
+
+        // Name validation: only letters and spaces
+        if (!/^[A-Za-z\s]+$/.test(name)) {
+          document.getElementById('nameError').textContent = 'Please enter a valid name (letters and spaces only).';
+          isValid = false;
+        }
+
+        // Blood group validation
+        if (!bloodGroup) {
+          document.getElementById('bloodGroupError').textContent = 'Please select a blood group.';
+          isValid = false;
+        }
+
+        // Location validation
+        if (!location) {
+          document.getElementById('locationError').textContent = 'Please enter your location.';
+          isValid = false;
+        }
+
+        // Contact validation: exactly 10 digits
+        if (!/^\d{10}$/.test(contact)) {
+          document.getElementById('contactError').textContent = 'Please enter a valid 10-digit mobile number.';
+          isValid = false;
+        }
+
+        if (!isValid) {
+          return;
+        }
+
+        // Gather donor object
+        const donor = {
+          name,
+          bloodGroup,
+          location,
+          contact
+        };
+
+        // Get existing donors from localStorage or create a new array
+        let donors = JSON.parse(localStorage.getItem('donors')) || [];
+        donors.push(donor);
+        localStorage.setItem('donors', JSON.stringify(donors));
+
+        // Redirect to success page
+        window.location.href = 'registration-success.html';
+    });
+  </script>
+</body>
+</html>
