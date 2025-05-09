@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Donor</title>
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+  <header>
+    <h1>Find Donor</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="donor-register.html">Register as Donor</a></li>
+        <li><a href="find-donor.html">Find Donor</a></li>
+        <li><a href="request-blood.html">Request Blood</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <div class="search-section">
+      <form id="searchForm">
+        <label for="searchBloodGroup">Search Blood Group:</label>
+        <select id="searchBloodGroup" required>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+        </select>
+        <button type="submit" class="search-button">Find Donor</button>
+      </form>
+    </div>
+
+    <div id="donorList" class="donor-grid"></div>
+
+    <div class="register-prompt">
+      <h3>Can't find a donor?</h3>
+      <p>Join our donor community and help save lives!</p>
+      <a href="/donor-register.html" class="cta-button">Register as Donor</a>
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2023 Blood Donation Portal</p>
+  </footer>
+  <script>
+    // Dummy data with corrected image paths from images folder
+    const dummyDonors = {
+      'A+': [
+        { name: 'Rahul Kumar', bloodGroup: 'A+', location: 'Bengaluru', contact: '9845632147', lastDonation: '2023-12-15', image: "/images/john.jpeg" },
+        { name: 'Priya Sharma', bloodGroup: 'A+', location: 'Mysuru', contact: '8956741230', lastDonation: '2023-12-01', image: '/images/bow.jpeg' }
+      ],
+      'B+': [
+        { name: 'Karthik Hegde', bloodGroup: 'B+', location: 'Mangaluru', contact: '9741852963', lastDonation: '2023-11-30', image: '/images/doe.png' },
+        { name: 'Deepa Shetty', bloodGroup: 'B+', location: 'Udupi', contact: '8147536920', lastDonation: '2023-12-05', image: '/images/keer.png' }
+      ],
+      'O+': [
+        { name: 'Suresh Rao', bloodGroup: 'O+', location: 'Hubli', contact: '9632587410', lastDonation: '2023-11-20', image: '/images/rah.jpeg' },
+        { name: 'Pooja Patel', bloodGroup: 'O+', location: 'Dharwad', contact: '7896541230', lastDonation: '2023-12-10', image: '/images/bow.jpeg' }
+      ],
+      'AB+': [
+        { name: 'Arun Gowda', bloodGroup: 'AB+', location: 'Belagavi', contact: '9874563210', lastDonation: '2023-11-25', image: '/images/keer.png' }
+      ],
+      'A-': [
+        { name: 'Meera Nair', bloodGroup: 'A-', location: 'Shivamogga', contact: '8529637410', lastDonation: '2023-12-08', image: '/images/doe.png' }
+      ],
+      'B-': [
+        { name: 'Vinay Krishna', bloodGroup: 'B-', location: 'Davangere', contact: '9517536842', lastDonation: '2023-11-28', image: '/images/john.png' }
+      ],
+      'O-': [
+        { name: 'Lakshmi Bhat', bloodGroup: 'O-', location: 'Manipal', contact: '7412589630', lastDonation: '2023-12-03', image: '/images/bow.png' }
+      ],
+      'AB-': [
+        { name: 'Rajesh Jain', bloodGroup: 'AB-', location: 'Tumkur', contact: '9638527410', lastDonation: '2023-11-15', image: '/images/keer.png' }
+      ]
+    };
+
+    document.getElementById('searchForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const bloodGroup = document.getElementById('searchBloodGroup').value;
+      const donorListDiv = document.getElementById('donorList');
+      
+      // Get dummy donors
+      const dummy = dummyDonors[bloodGroup] || [];
+      // Get registered donors from localStorage
+      const registeredAll = JSON.parse(localStorage.getItem('donors')) || [];
+      // Filter registered donors by blood groupimage.png
+      const registered = registeredAll.filter(donor => donor.bloodGroup === bloodGroup);
+      // Combine both arrays
+      const donors = [...dummy, ...registered];
+      
+      if (donors.length === 0) {
+        donorListDiv.innerHTML = '<p class="no-results">No donors found for this blood group.</p>';
+        return;
+      }
+
+      const donorHTML = donors.map(donor => `
+        <div class="donor-card">
+          <img src="${donor.image ? donor.image : '/images/default.png'}" alt="${donor.name}" class="donor-avatar">
+          <h3>${donor.name}</h3>
+          <p><strong>Blood Group:</strong> ${donor.bloodGroup}</p>
+          <p><strong>Location:</strong> ${donor.location}</p>
+          <p><strong>Contact:</strong> ${donor.contact}</p>
+          <p><strong>Last Donation:</strong> ${donor.lastDonation ? donor.lastDonation : 'N/A'}</p>
+          <button class="contact-btn">Contact Donor</button>
+        </div>
+      `).join('');
+
+      donorListDiv.innerHTML = donorHTML;
+    });
+  </script>
+  <script src="scripts/script.js"></script>
+
+  <div id="liveRegistrationCard" style="display:none; border:2px solid #e74c3c; background:#fff3f3; padding:16px; margin-bottom:24px; border-radius:8px;">
+    <h3 style="color:#e74c3c;">Live Registration In Progress</h3>
+    <p><strong>Name:</strong> <span id="liveName"></span></p>
+    <p><strong>Blood Group:</strong> <span id="liveBloodGroup"></span></p>
+    <p><strong>Location:</strong> <span id="liveLocation"></span></p>
+    <p><strong>Contact:</strong> <span id="liveContact"></span></p>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    function updateLiveRegistrationCard() {
+      const donor = JSON.parse(localStorage.getItem('currentDonor') || '{}');
+      if (donor.name || donor.bloodGroup || donor.location || donor.contact) {
+        $('#liveName').text(donor.name || '');
+        $('#liveBloodGroup').text(donor.bloodGroup || '');
+        $('#liveLocation').text(donor.location || '');
+        $('#liveContact').text(donor.contact || '');
+        if (!$('#liveRegistrationCard').is(':visible')) {
+          $('#liveRegistrationCard').fadeIn(400); // jQuery effect
+        }
+      } else {
+        if ($('#liveRegistrationCard').is(':visible')) {
+          $('#liveRegistrationCard').fadeOut(400); // jQuery effect
+        }
+      }
+    }
+
+    $(function() {
+      updateLiveRegistrationCard();
+      window.addEventListener('storage', updateLiveRegistrationCard);
+      setInterval(updateLiveRegistrationCard, 500); // For same-tab updates
+    });
+  </script>
+  <script>
+    $(function() {
+      // Apply a linear gradient background to the body
+      $('body').css('background', 'linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)');
+    });
+  </script>
+</body>
+</html>
